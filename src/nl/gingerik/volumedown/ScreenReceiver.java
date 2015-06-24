@@ -1,47 +1,43 @@
 package nl.gingerik.volumedown;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.os.Handler;
 
 public class ScreenReceiver extends BroadcastReceiver {
 	
 	private final Logger mLog;
-	private final Handler mHandler = new Handler();
-	private Context mContext;
+	private PendingIntent mPendingIntent;
+	private int mDelay;
 	
 	public ScreenReceiver(Context context) {
         mLog = new Logger(context, ScreenReceiver.class.getSimpleName());
         mLog.v("Create ScreenReceiver");
+        mDelay = 30000; // FIXME get from settings
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
         mLog.v("Received " + intent.getAction());
-        mContext = context;
         
         switch (intent.getAction()) {
     	case Intent.ACTION_SCREEN_ON:
-    		mHandler.removeCallbacks(mTask);
+    		if (mPendingIntent != null) {
+    	        mLog.v("Cancelling alarm");
+        		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    			alarmManager.cancel(mPendingIntent);
+    			mPendingIntent = null;
+    		}
     		break;
     	case Intent.ACTION_SCREEN_OFF:
-    		mHandler.postDelayed(mTask, 30000);
+    		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    		Intent receiverIntent = new Intent(context, CountdownReceiver.class);
+    		mPendingIntent = PendingIntent.getBroadcast(context, 0,  receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    		alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + mDelay, mPendingIntent);
     		break;
         }
 	}
-	
-	private Runnable mTask = new Runnable() {
-		@Override
-		public void run() {
-			int volume = 0;
-	        mLog.v("Reset volume to " + volume);
-	        AudioManager audioManager = (AudioManager)
-	        		mContext.getSystemService(Context.AUDIO_SERVICE);
-	        audioManager.setStreamVolume(
-	        		AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_SHOW_UI);
-		}
-	};
 
 }

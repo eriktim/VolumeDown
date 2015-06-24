@@ -13,7 +13,7 @@ public class CountdownReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		mLog = new Logger(context, CountdownReceiver.class.getSimpleName());
-		mLog.v("Received " + intent.getAction());
+		mLog.v("Received end of countdown");
 
 		mVolume = 0; // FIXME get from settings
 		mLog.i("Reset volume to " + mVolume);

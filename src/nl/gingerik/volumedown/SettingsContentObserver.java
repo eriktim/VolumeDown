@@ -14,8 +14,7 @@ public class SettingsContentObserver extends ContentObserver {
 	private final Logger mLog;
 	private BroadcastReceiver mScreenReceiver;
 	private Context mContext;
-	private int mLastVolume;
-	private int mDefaultVolume;
+	private int mVolume;
 
 	public SettingsContentObserver(Context context, Handler handler) {
 		super(handler);
@@ -26,10 +25,10 @@ public class SettingsContentObserver extends ContentObserver {
 		mContext = context;
 		AudioManager audioManager = (AudioManager) context
 				.getSystemService(Context.AUDIO_SERVICE);
-		mLastVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		mDefaultVolume = 0; // FIXME get from settings
+		int volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		mVolume = 0; // FIXME get from settings
 
-		if (mLastVolume != mDefaultVolume) {
+		if (volume != mVolume) {
 			onChange(true);
 		}
 	}
@@ -47,18 +46,12 @@ public class SettingsContentObserver extends ContentObserver {
 				.getSystemService(Context.AUDIO_SERVICE);
 		int volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-		if (volume != mLastVolume) {
+		if (mScreenReceiver != null) {
+			mContext.unregisterReceiver(mScreenReceiver);
+			mScreenReceiver = null;
+		}
 
-			if (mScreenReceiver != null) {
-				mContext.unregisterReceiver(mScreenReceiver);
-				mScreenReceiver = null;
-			}
-
-			mLastVolume = volume;
-			if (volume == mDefaultVolume) {
-				return;
-			}
-
+		if (volume != mVolume) {
 			mScreenReceiver = new ScreenReceiver(mContext);
 
 			mLog.v("Settings change detected");

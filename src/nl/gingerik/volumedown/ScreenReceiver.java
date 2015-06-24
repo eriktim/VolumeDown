@@ -11,6 +11,7 @@ public class ScreenReceiver extends BroadcastReceiver {
 	private final Logger mLog;
 	private PendingIntent mPendingIntent;
 	private int mDelay;
+	private long mTimestamp = 0;
 
 	public ScreenReceiver(Context context) {
 		mLog = new Logger(context, ScreenReceiver.class.getSimpleName());
@@ -25,7 +26,12 @@ public class ScreenReceiver extends BroadcastReceiver {
 		switch (intent.getAction()) {
 		case Intent.ACTION_SCREEN_ON:
 			if (mPendingIntent != null) {
+				if (mTimestamp > 0 && mTimestamp < System.currentTimeMillis()) {
+					mLog.v("Not cancelling alarm");
+					return;
+				}
 				mLog.v("Cancelling alarm");
+				mTimestamp = 0;
 				AlarmManager alarmManager = (AlarmManager) context
 						.getSystemService(Context.ALARM_SERVICE);
 				alarmManager.cancel(mPendingIntent);
@@ -38,8 +44,8 @@ public class ScreenReceiver extends BroadcastReceiver {
 			Intent receiverIntent = new Intent(context, CountdownReceiver.class);
 			mPendingIntent = PendingIntent.getBroadcast(context, 0,
 					receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			alarmManager.set(AlarmManager.RTC, System.currentTimeMillis()
-					+ mDelay, mPendingIntent);
+			mTimestamp = System.currentTimeMillis() + mDelay;
+			alarmManager.set(AlarmManager.RTC, mTimestamp, mPendingIntent);
 			break;
 		}
 	}

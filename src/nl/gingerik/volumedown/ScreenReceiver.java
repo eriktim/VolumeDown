@@ -8,9 +8,13 @@ import android.os.Handler;
 
 public class ScreenReceiver extends BroadcastReceiver {
 	
-	private final Logger mLog = new Logger(ScreenReceiver.class.getSimpleName());
+	private final Logger mLog;
 	private final Handler mHandler = new Handler();
 	private Context mContext;
+	
+	public ScreenReceiver(Context context) {
+        mLog = new Logger(context, ScreenReceiver.class.getSimpleName());
+	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {

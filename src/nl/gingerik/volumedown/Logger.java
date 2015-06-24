@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.os.Environment;
+import android.content.Context;
 import android.util.Log;
 
 
@@ -19,9 +19,9 @@ public class Logger {
 	private String mTag;
 	private File mFile;
 
-	public Logger(String tag) {
+	public Logger(Context context, String tag) {
 		mTag = tag;
-		File externalStoragePath = Environment.getExternalStorageDirectory();
+		File externalStoragePath = context.getExternalFilesDir(null);
 
 	    mFile = new File(externalStoragePath.getPath() + "/volumedown.log");
 	}

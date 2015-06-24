@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class SettingsContentObserver extends ContentObserver {
 	
-	private final Logger mLog = new Logger(SettingsContentObserver.class.getSimpleName());
+	private final Logger mLog;
 	private BroadcastReceiver mScreenReceiver;
 	private Context mContext;
 	private int mLastVolume;
@@ -20,6 +20,7 @@ public class SettingsContentObserver extends ContentObserver {
 	public SettingsContentObserver(Context context, Handler handler) {
 		super(handler);
 		
+		mLog = new Logger(context, SettingsContentObserver.class.getSimpleName());
 		mContext = context;
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		mLastVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -50,7 +51,7 @@ public class SettingsContentObserver extends ContentObserver {
         		return;
         	}
 
-        	mScreenReceiver = new ScreenReceiver();
+        	mScreenReceiver = new ScreenReceiver(mContext);
         	
     		mLog.v("Settings change detected");
     		Toast.makeText(mContext, "Detected volume change", Toast.LENGTH_SHORT).show();

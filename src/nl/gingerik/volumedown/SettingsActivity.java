@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class SettingsActivity extends Activity {
 
-	private final Logger mLog = new Logger(SettingsActivity.class.getSimpleName());
+	private final Logger mLog = new Logger(this, SettingsActivity.class.getSimpleName());
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

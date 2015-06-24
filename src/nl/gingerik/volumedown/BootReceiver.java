@@ -6,10 +6,11 @@ import android.content.Intent;
 
 public class BootReceiver extends BroadcastReceiver {
 	
-	private final Logger mLog = new Logger(BootReceiver.class.getSimpleName());
+	private Logger mLog;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		mLog = new Logger(context, BootReceiver.class.getSimpleName());
         mLog.v("Received intent");
         Intent serviceIntent = new Intent(context, VolumeControlService.class);
         context.startService(serviceIntent);

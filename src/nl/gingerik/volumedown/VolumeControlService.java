@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class VolumeControlService extends Service {
 
-	private final Logger mLog = new Logger(VolumeControlService.class.getSimpleName());
+	private final Logger mLog = new Logger(this, VolumeControlService.class.getSimpleName());
 	private SettingsContentObserver mSettingsContentObserver;
 	
 	@Override

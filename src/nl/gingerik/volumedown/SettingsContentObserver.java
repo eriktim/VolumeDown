@@ -26,6 +26,10 @@ public class SettingsContentObserver extends ContentObserver {
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		mLastVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		mDefaultVolume = 0; // FIXME get from settings
+		
+		if (mLastVolume != mDefaultVolume) {
+			onChange(true);
+		}
 	} 
 
 	@Override

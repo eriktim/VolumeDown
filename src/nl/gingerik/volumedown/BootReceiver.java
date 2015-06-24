@@ -11,7 +11,7 @@ public class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		mLog = new Logger(context, BootReceiver.class.getSimpleName());
-        mLog.v("Received intent");
+        mLog.v("Received " + intent.getAction());
         Intent serviceIntent = new Intent(context, VolumeControlService.class);
         context.startService(serviceIntent);
 	}

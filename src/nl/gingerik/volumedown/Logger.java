@@ -57,8 +57,8 @@ public class Logger {
 	   try {
 	      BufferedWriter buf = new BufferedWriter(new FileWriter(mFile, true)); 
 	      buf.append(mFormat.format(new Date()));
-	      buf.append("\t" + mTag);
 	      buf.append("\t" + level);
+	      buf.append("\t" + mTag);
 	      buf.append("\t" + message);
 	      buf.newLine();
 	      buf.close();

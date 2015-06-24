@@ -13,6 +13,7 @@ public class VolumeControlService extends Service {
 	
 	@Override
 	public void onCreate() {
+    	mLog.v("Starting VolumeDown Service");
     	Toast.makeText(this, "Starting VolumeDown Service", Toast.LENGTH_SHORT).show();
 		super.onCreate();
 		mSettingsContentObserver = new SettingsContentObserver(this, new Handler()); 
@@ -23,6 +24,7 @@ public class VolumeControlService extends Service {
 	
 	@Override
 	public void onDestroy() {
+    	mLog.v("Stopping VolumeDown Service");
     	Toast.makeText(this, "Stopping VolumeDown Service", Toast.LENGTH_SHORT).show();
 		if (mSettingsContentObserver != null) {
 			getApplicationContext().getContentResolver()
@@ -39,7 +41,7 @@ public class VolumeControlService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	    mLog.v("Received start command");
+	    mLog.v("VolumeDown Service received start command");
 	    return START_STICKY; // keep running
 	}
 

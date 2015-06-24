@@ -21,6 +21,7 @@ public class SettingsContentObserver extends ContentObserver {
 		super(handler);
 		
 		mLog = new Logger(context, SettingsContentObserver.class.getSimpleName());
+		mLog.v("Create SettingsContentObserver");
 		mContext = context;
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		mLastVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);

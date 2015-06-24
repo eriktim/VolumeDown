@@ -14,6 +14,7 @@ public class ScreenReceiver extends BroadcastReceiver {
 	
 	public ScreenReceiver(Context context) {
         mLog = new Logger(context, ScreenReceiver.class.getSimpleName());
+        mLog.v("Create ScreenReceiver");
 	}
 
 	@Override
@@ -34,11 +35,12 @@ public class ScreenReceiver extends BroadcastReceiver {
 	private Runnable mTask = new Runnable() {
 		@Override
 		public void run() {
-	        mLog.v("Reset volume");
+			int volume = 0;
+	        mLog.v("Reset volume to " + volume);
 	        AudioManager audioManager = (AudioManager)
 	        		mContext.getSystemService(Context.AUDIO_SERVICE);
 	        audioManager.setStreamVolume(
-	        		AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
+	        		AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_SHOW_UI);
 		}
 	};
 

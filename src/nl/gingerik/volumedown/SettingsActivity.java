@@ -8,14 +8,14 @@ import android.view.MenuItem;
 
 public class SettingsActivity extends Activity {
 
-	private final Logger mLog = new Logger(this,
-			SettingsActivity.class.getSimpleName());
+	private Logger mLog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
+		mLog = new Logger(this, SettingsActivity.class.getSimpleName());
 		mLog.v("Received intent");
 		Intent intent = new Intent(this, VolumeControlService.class);
 		startService(intent);

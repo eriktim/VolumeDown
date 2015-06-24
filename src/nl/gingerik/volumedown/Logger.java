@@ -15,14 +15,25 @@ public class Logger {
 
 	private final SimpleDateFormat mFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm'Z'", Locale.US);
+	private Context mContext;
 	private String mTag;
 	private File mFile;
 
 	public Logger(Context context, String tag) {
+		mContext = context;
 		mTag = tag;
-		File externalStoragePath = context.getExternalFilesDir(null);
+		setLogFile();
+	}
 
+	private boolean setLogFile() {
+		File externalStoragePath = mContext.getExternalFilesDir(null);
+		if (externalStoragePath == null) {
+			Log.w(mTag, "External storage is not ready. "
+					+ "Not writing to log file.");
+			return false;
+		}
 		mFile = new File(externalStoragePath.getPath() + "/volumedown.log");
+		return true;
 	}
 
 	public void v(String message) {
@@ -46,6 +57,12 @@ public class Logger {
 	}
 
 	private void appendLog(String level, String message) {
+		if (mFile == null) {
+			setLogFile();
+			if (mFile == null) {
+				return;
+			}
+		}
 		if (!mFile.exists()) {
 			try {
 				mFile.createNewFile();

@@ -8,12 +8,12 @@ import android.widget.Toast;
 
 public class VolumeControlService extends Service {
 
-	private final Logger mLog = new Logger(this,
-			VolumeControlService.class.getSimpleName());
+	private Logger mLog;
 	private SettingsContentObserver mSettingsContentObserver;
 
 	@Override
 	public void onCreate() {
+		mLog = new Logger(this, VolumeControlService.class.getSimpleName());
 		mLog.v("Starting VolumeDown Service");
 		Toast.makeText(this, "Starting VolumeDown Service", Toast.LENGTH_SHORT)
 				.show();

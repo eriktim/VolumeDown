@@ -6,19 +6,19 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
 
-public class VolumeControlService extends Service {
+public class BackgroundService extends Service {
 
 	private Logger mLog;
-	private SettingsContentObserver mSettingsContentObserver;
+	private SystemSettingsObserver mSettingsContentObserver;
 
 	@Override
 	public void onCreate() {
-		mLog = new Logger(this, VolumeControlService.class.getSimpleName());
+		mLog = new Logger(this, BackgroundService.class.getSimpleName());
 		mLog.v("Starting VolumeDown Service");
 		Toast.makeText(this, "Starting VolumeDown Service", Toast.LENGTH_SHORT)
 				.show();
 		super.onCreate();
-		mSettingsContentObserver = new SettingsContentObserver(this,
+		mSettingsContentObserver = new SystemSettingsObserver(this,
 				new Handler());
 		this.getApplicationContext()
 				.getContentResolver()

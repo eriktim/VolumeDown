@@ -7,15 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
-public class ScreenReceiver extends BroadcastReceiver {
+public class ScreenStateReceiver extends BroadcastReceiver {
 
 	private final Logger mLog;
 	private PendingIntent mPendingIntent;
 	private int mDelay;
 	private long mElapsedTime = 0;
 
-	public ScreenReceiver(Context context) {
-		mLog = new Logger(context, ScreenReceiver.class.getSimpleName());
+	public ScreenStateReceiver(Context context) {
+		mLog = new Logger(context, ScreenStateReceiver.class.getSimpleName());
 		mLog.v("Create ScreenReceiver");
 		mDelay = 30000; // FIXME get from settings
 	}

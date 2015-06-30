@@ -17,7 +17,7 @@ public class SettingsActivity extends Activity {
 
 		mLog = new Logger(this, SettingsActivity.class.getSimpleName());
 		mLog.v("Received intent");
-		Intent intent = new Intent(this, VolumeControlService.class);
+		Intent intent = new Intent(this, BackgroundService.class);
 		startService(intent);
 	}
 

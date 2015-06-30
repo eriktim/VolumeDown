@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="pref_cat_debug"
+        android:title="@string/pref_cat_settings" >
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:key="pref_volume_level"
+            android:max="100"
+            android:summary="@string/pref_volume_level_summ"
+            android:title="@string/pref_volume_level" />
+        <SeekBarPreference
+            android:defaultValue="30"
+            android:key="pref_volume_level"
+            android:max="60"
+            android:summary="@string/pref_timeout_summ"
+            android:title="@string/pref_timeout" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_cat_debug"
+        android:title="@string/pref_cat_debug" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_log"
+            android:summary="@string/pref_log_summ"
+            android:title="@string/pref_log" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_toast"
+            android:summary="@string/pref_toast_summ"
+            android:title="@string/pref_toast" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

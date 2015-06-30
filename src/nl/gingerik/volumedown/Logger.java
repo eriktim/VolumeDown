@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Logger {
@@ -18,11 +20,19 @@ public class Logger {
 	private Context mContext;
 	private String mTag;
 	private File mFile;
+	private boolean mLogToFile;
 
 	public Logger(Context context, String tag) {
 		mContext = context;
 		mTag = tag;
-		setLogFile();
+		
+
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		mLogToFile = sharedPref.getBoolean(SettingsActivity.PREF_LOG, false);
+		if (mLogToFile) {
+			setLogFile();
+		}
 	}
 
 	private boolean setLogFile() {
@@ -57,6 +67,9 @@ public class Logger {
 	}
 
 	private void appendLog(String level, String message) {
+		if (!mLogToFile) {
+			return;
+		}
 		if (mFile == null) {
 			setLogFile();
 			if (mFile == null) {

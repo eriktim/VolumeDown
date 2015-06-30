@@ -2,7 +2,15 @@
 <resources>
 
     <string name="app_name">VolumeDown</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="pref_cat_settings">Settings</string>
+    <string name="pref_volume_level">Base volume level</string>
+    <string name="pref_volume_level_summ">Volume level to set when restoring</string>
+    <string name="pref_timeout">Timeout</string>
+    <string name="pref_timeout_summ">Idle time after screen is turned off</string>
+    <string name="pref_cat_debug">Debug</string>
+    <string name="pref_log">Log to external drive</string>
+    <string name="pref_log_summ">Enable logging to the external drive</string>
+    <string name="pref_toast">Show toasts</string>
+    <string name="pref_toast_summ">Show toast on app actions</string>
 
 </resources>

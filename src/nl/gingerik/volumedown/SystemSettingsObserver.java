@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class SystemSettingsObserver extends ContentObserver {
@@ -51,14 +53,18 @@ public class SystemSettingsObserver extends ContentObserver {
 		}
 
 		if (volume != mVolume) {
-			mScreenReceiver = new ScreenStateReceiver(mContext);
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+			boolean showToast = sharedPref.getBoolean(SettingsActivity.PREF_TOAST, false);
 
 			mLog.v("Settings change detected");
-			Toast.makeText(mContext, "Detected volume change",
-					Toast.LENGTH_SHORT).show();
+			if (showToast) {
+				Toast.makeText(mContext, "Detected volume change",
+						Toast.LENGTH_SHORT).show();
+			}
 			IntentFilter filter = new IntentFilter();
 			filter.addAction(Intent.ACTION_SCREEN_OFF);
 			filter.addAction(Intent.ACTION_SCREEN_ON);
+			mScreenReceiver = new ScreenStateReceiver(mContext);
 			mContext.registerReceiver(mScreenReceiver, filter);
 		}
 	}

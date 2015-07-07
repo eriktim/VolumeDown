@@ -25,11 +25,11 @@ public class Logger {
 	public Logger(Context context, String tag) {
 		mContext = context;
 		mTag = tag;
-		
 
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		mLogToFile = sharedPref.getBoolean(SettingsActivity.PREF_LOG, false);
+		mLogToFile = sharedPref.getBoolean(SettingsActivity.PREF_LOG, context
+				.getResources().getBoolean(R.bool.pref_log_default));
 		if (mLogToFile) {
 			setLogFile();
 		}

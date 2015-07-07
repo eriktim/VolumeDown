@@ -21,7 +21,8 @@ public class BackgroundService extends Service {
 
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		mShowToast = sharedPref.getBoolean(SettingsActivity.PREF_TOAST, false);
+		mShowToast = sharedPref.getBoolean(SettingsActivity.PREF_TOAST,
+				getResources().getBoolean(R.bool.pref_toast_default));
 
 		if (mShowToast) {
 			Toast.makeText(this, "Starting VolumeDown Service",

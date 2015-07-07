@@ -2,14 +2,19 @@ package nl.gingerik.volumedown;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
+
+	private SharedPreferences mSharedPref;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,13 +22,23 @@ public class SettingsFragment extends PreferenceFragment implements
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preferences);
 
-		// Set the maximum volume
-		AudioManager audioManager = (AudioManager) getActivity()
-				.getSystemService(Context.AUDIO_SERVICE);
-		int maxVolume = audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		SeekBarPreference seekBar = (SeekBarPreference) findPreference(SettingsActivity.PREF_VOLUME_LEVEL);
-		seekBar.setMax(maxVolume);
+		mSharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		onSharedPreferenceChanged(mSharedPref, SettingsActivity.PREF_TIMEOUT);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mSharedPref.registerOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	public void onPause() {
+		if (mSharedPref != null) {
+			mSharedPref.unregisterOnSharedPreferenceChangeListener(this);
+		}
+		super.onPause();
 	}
 
 	@Override
@@ -32,17 +47,35 @@ public class SettingsFragment extends PreferenceFragment implements
 		switch (key) {
 		case SettingsActivity.PREF_TIMEOUT:
 			ListPreference pref = (ListPreference) findPreference(key);
-			int timeout = sharedPreferences.getInt(key,
-					R.integer.pref_timeout_default);
+			String timeoutString = sharedPreferences.getString(key,
+					getResources().getString(R.string.pref_timeout_default));
+			int timeout = Integer.parseInt(timeoutString);
 			String delayText;
 			if (timeout < 60) {
-				delayText = timeout + " seconds";
+				delayText = timeoutString + " seconds";
 			} else if (timeout == 60) {
 				delayText = "1 minute";
 			} else {
 				delayText = (timeout / 60) + " minutes";
 			}
 			pref.setSummary("Restore volume after " + delayText);
+			break;
+		case SettingsActivity.PREF_VOLUME_LEVEL_REL:
+			AudioManager audioManager = (AudioManager) getActivity()
+					.getSystemService(Context.AUDIO_SERVICE);
+			int maxVolume = audioManager
+					.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+			int relVolume = sharedPreferences.getInt(key, getResources()
+					.getInteger(R.integer.pref_volume_level_default));
+			int volume = (int) Math.floor(maxVolume * relVolume / 100.0);
+
+			// update absolute volume level
+			Editor editor = sharedPreferences.edit();
+			editor.putInt(SettingsActivity.PREF_VOLUME_LEVEL, volume);
+			editor.commit();
+			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume,
+					AudioManager.FLAG_PLAY_SOUND);
+			break;
 		}
 	}
 }

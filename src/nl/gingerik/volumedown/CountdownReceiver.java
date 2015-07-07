@@ -19,11 +19,15 @@ public class CountdownReceiver extends BroadcastReceiver {
 
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		mVolume = sharedPref.getInt(SettingsActivity.PREF_VOLUME_LEVEL, 0);
-		mLog.i("Reset volume to " + mVolume);
-
 		AudioManager audioManager = (AudioManager) context
 				.getSystemService(Context.AUDIO_SERVICE);
+
+		mVolume = sharedPref
+				.getInt(SettingsActivity.PREF_VOLUME_LEVEL,
+						context.getResources().getInteger(
+								R.integer.pref_volume_level_default));
+		mLog.i("Reset volume to " + mVolume);
+
 		audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mVolume,
 				AudioManager.FLAG_SHOW_UI);
 	}

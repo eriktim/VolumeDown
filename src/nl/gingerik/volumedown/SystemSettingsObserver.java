@@ -56,8 +56,10 @@ public class SystemSettingsObserver extends ContentObserver {
 		}
 
 		if (volume != mVolume) {
-			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-			boolean showToast = sharedPref.getBoolean(SettingsActivity.PREF_TOAST, false);
+			SharedPreferences sharedPref = PreferenceManager
+					.getDefaultSharedPreferences(mContext);
+			boolean showToast = sharedPref.getBoolean(
+					SettingsActivity.PREF_TOAST, false);
 
 			mLog.v("Settings change detected");
 			if (showToast) {

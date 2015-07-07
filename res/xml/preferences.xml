@@ -5,14 +5,14 @@
         android:key="pref_cat_debug"
         android:title="@string/pref_cat_settings" >
         <SeekBarPreference
-            android:key="pref_volume_level"
+            android:key="pref_volume_level_rel"
             android:defaultValue="@integer/pref_volume_level_default"
             android:max="100"
             android:summary="@string/pref_volume_level_summ"
             android:title="@string/pref_volume_level" />
         <ListPreference
             android:key="pref_timeout"
-            android:defaultValue="@integer/pref_timeout_default"
+            android:defaultValue="@string/pref_timeout_default"
             android:title="@string/pref_timeout"
             android:summary="@string/pref_timeout_summ"
             android:dialogTitle="@string/pref_timeout_title"

@@ -2,11 +2,12 @@
 <resources>
     <string name="app_name">VolumeDown</string>
     <string name="pref_cat_settings">Settings</string>
-    <string name="pref_volume_level">Base volume level</string>
-    <string name="pref_volume_level_summ">Volume level to set when restoring</string>
+    <string name="pref_volume_level">Base media volume level</string>
+    <string name="pref_volume_level_summ">Media volume level to set when restoring</string>
     <string name="pref_timeout">Timeout time</string>
     <string name="pref_timeout_summ">Idle time after which the screen is turned off</string>
     <string name="pref_timeout_title">Timeout time</string>
+    <string name="pref_timeout_default">30</string>
     <string name="pref_cat_debug">Debug</string>
     <string name="pref_log">Log to external drive</string>
     <string name="pref_log_summ">Enable logging to the external drive</string>

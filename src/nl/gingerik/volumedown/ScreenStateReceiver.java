@@ -5,7 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 
 public class ScreenStateReceiver extends BroadcastReceiver {
 
@@ -17,7 +19,13 @@ public class ScreenStateReceiver extends BroadcastReceiver {
 	public ScreenStateReceiver(Context context) {
 		mLog = new Logger(context, ScreenStateReceiver.class.getSimpleName());
 		mLog.v("Create ScreenReceiver");
-		mDelay = 30000; // FIXME get from settings
+
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		String timeoutString = sharedPref.getString(
+				SettingsActivity.PREF_TIMEOUT, context.getResources()
+						.getString(R.string.pref_timeout_default));
+		mDelay = Integer.parseInt(timeoutString);
 	}
 
 	@Override

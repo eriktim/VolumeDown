@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">VolumeDown</string>
     <string name="pref_cat_settings">Settings</string>
     <string name="pref_volume_level">Base volume level</string>
     <string name="pref_volume_level_summ">Volume level to set when restoring</string>
-    <string name="pref_timeout">Timeout</string>
-    <string name="pref_timeout_summ">Idle time after screen is turned off</string>
+    <string name="pref_timeout">Timeout time</string>
+    <string name="pref_timeout_summ">Idle time after which the screen is turned off</string>
+    <string name="pref_timeout_title">Timeout time</string>
     <string name="pref_cat_debug">Debug</string>
     <string name="pref_log">Log to external drive</string>
     <string name="pref_log_summ">Enable logging to the external drive</string>
     <string name="pref_toast">Show toasts</string>
     <string name="pref_toast_summ">Show toast on app actions</string>
-
 </resources>

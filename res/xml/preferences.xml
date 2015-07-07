@@ -5,29 +5,31 @@
         android:key="pref_cat_debug"
         android:title="@string/pref_cat_settings" >
         <SeekBarPreference
-            android:defaultValue="0"
             android:key="pref_volume_level"
+            android:defaultValue="@integer/pref_volume_level_default"
             android:max="100"
             android:summary="@string/pref_volume_level_summ"
             android:title="@string/pref_volume_level" />
-        <SeekBarPreference
-            android:defaultValue="30"
-            android:key="pref_volume_level"
-            android:max="60"
+        <ListPreference
+            android:key="pref_timeout"
+            android:defaultValue="@integer/pref_timeout_default"
+            android:title="@string/pref_timeout"
             android:summary="@string/pref_timeout_summ"
-            android:title="@string/pref_timeout" />
+            android:dialogTitle="@string/pref_timeout_title"
+            android:entries="@array/pref_timeout_entries"
+            android:entryValues="@array/pref_timeout_values" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_cat_debug"
         android:title="@string/pref_cat_debug" >
         <CheckBoxPreference
-            android:defaultValue="false"
             android:key="pref_log"
+            android:defaultValue="@bool/pref_log_default"
             android:summary="@string/pref_log_summ"
             android:title="@string/pref_log" />
         <CheckBoxPreference
-            android:defaultValue="false"
             android:key="pref_toast"
+            android:defaultValue="@bool/pref_toast_default"
             android:summary="@string/pref_toast_summ"
             android:title="@string/pref_toast" />
     </PreferenceCategory>

@@ -16,7 +16,7 @@ import android.util.Log;
 public class Logger {
 
 	private final SimpleDateFormat mFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm'Z'", Locale.US);
+			"yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 	private Context mContext;
 	private String mTag;
 	private File mFile;

@@ -3,7 +3,9 @@ package nl.gingerik.volumedown;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.preference.PreferenceManager;
 
 public class CountdownReceiver extends BroadcastReceiver {
 
@@ -15,7 +17,9 @@ public class CountdownReceiver extends BroadcastReceiver {
 		mLog = new Logger(context, CountdownReceiver.class.getSimpleName());
 		mLog.v("Received end of countdown");
 
-		mVolume = 0; // FIXME get from settings
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		mVolume = sharedPref.getInt(SettingsActivity.PREF_VOLUME_LEVEL, 0);
 		mLog.i("Reset volume to " + mVolume);
 
 		AudioManager audioManager = (AudioManager) context

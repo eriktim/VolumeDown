@@ -27,7 +27,10 @@ public class SystemSettingsObserver extends ContentObserver {
 		AudioManager audioManager = (AudioManager) context
 				.getSystemService(Context.AUDIO_SERVICE);
 		int volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		mVolume = 0; // FIXME get from settings
+
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		mVolume = sharedPref.getInt(SettingsActivity.PREF_VOLUME_LEVEL, 0);
 
 		if (volume != mVolume) {
 			onChange(true);

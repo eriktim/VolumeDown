@@ -99,6 +99,7 @@ public class SeekBarPreference extends DialogPreference implements
 			dest.writeInt(value);
 		}
 
+		@SuppressWarnings("unused")
 		public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
 
 			public SavedState createFromParcel(Parcel in) {
@@ -134,6 +135,11 @@ public class SeekBarPreference extends DialogPreference implements
 		super.onRestoreInstanceState(myState.getSuperState());
 
 		mSeekBar.setProgress(myState.value);
+	}
+	
+	public void setMax(int max) {
+		mMaxValue = max;
+		mSeekBar.setMax(mMaxValue - mMinValue);
 	}
 
 }

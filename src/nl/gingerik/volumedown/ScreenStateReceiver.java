@@ -25,7 +25,7 @@ public class ScreenStateReceiver extends BroadcastReceiver {
 		String timeoutString = sharedPref.getString(
 				SettingsActivity.PREF_TIMEOUT, context.getResources()
 						.getString(R.string.pref_timeout_default));
-		mDelay = Integer.parseInt(timeoutString);
+		mDelay = 1000 * Integer.parseInt(timeoutString);
 	}
 
 	@Override

@@ -1,5 +1,9 @@
 package nl.gingerik.volumedown;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -11,6 +15,8 @@ import android.preference.PreferenceManager;
 
 public class ScreenStateReceiver extends BroadcastReceiver {
 
+	private final SimpleDateFormat mFormat = new SimpleDateFormat(
+			Logger.DATE_FORMAT, Locale.US);
 	private final Logger mLog;
 	private PendingIntent mPendingIntent;
 	private int mDelay;
@@ -55,11 +61,11 @@ public class ScreenStateReceiver extends BroadcastReceiver {
 			mPendingIntent = PendingIntent.getBroadcast(context, 0,
 					receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 			mElapsedTime = SystemClock.elapsedRealtime() + mDelay;
-			mLog.v("Setting alarm");
+			Date timeoutDate = new Date(System.currentTimeMillis() + mDelay);
+			mLog.v("Setting alarm to approx. " + mFormat.format(timeoutDate));
 			alarmManager.set(AlarmManager.ELAPSED_REALTIME, mElapsedTime,
 					mPendingIntent);
 			break;
 		}
 	}
-
 }

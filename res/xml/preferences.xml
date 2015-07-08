@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <SwitchPreference
+        android:defaultValue="@bool/pref_enable_default"
+        android:key="pref_enable"
+        android:summary="@string/pref_enable_summ"
+        android:title="@string/pref_enable" />
+
     <PreferenceCategory
-        android:key="pref_cat_debug"
-        android:title="@string/pref_cat_settings" >
+        android:key="pref_cat_configuration"
+        android:title="@string/pref_cat_configuration" >
         <SeekBarPreference
-            android:key="pref_volume_level_rel"
             android:defaultValue="@integer/pref_volume_level_default"
+            android:key="pref_volume_level_rel"
             android:max="100"
             android:summary="@string/pref_volume_level_summ"
             android:title="@string/pref_volume_level" />
+
         <ListPreference
-            android:key="pref_timeout"
             android:defaultValue="@string/pref_timeout_default"
-            android:title="@string/pref_timeout"
-            android:summary="@string/pref_timeout_summ"
             android:dialogTitle="@string/pref_timeout_title"
             android:entries="@array/pref_timeout_entries"
-            android:entryValues="@array/pref_timeout_values" />
+            android:entryValues="@array/pref_timeout_values"
+            android:key="pref_timeout"
+            android:summary="@string/pref_timeout_summ"
+            android:title="@string/pref_timeout" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_cat_debug"
         android:title="@string/pref_cat_debug" >
         <CheckBoxPreference
-            android:key="pref_log"
             android:defaultValue="@bool/pref_log_default"
+            android:key="pref_log"
             android:summary="@string/pref_log_summ"
             android:title="@string/pref_log" />
         <CheckBoxPreference
-            android:key="pref_toast"
             android:defaultValue="@bool/pref_toast_default"
+            android:key="pref_toast"
             android:summary="@string/pref_toast_summ"
             android:title="@string/pref_toast" />
     </PreferenceCategory>

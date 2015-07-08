@@ -1,14 +1,18 @@
 package nl.gingerik.volumedown;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
@@ -24,6 +28,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
 		mSharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
+		onSharedPreferenceChanged(mSharedPref, SettingsActivity.PREF_ENABLE);
 		onSharedPreferenceChanged(mSharedPref, SettingsActivity.PREF_TIMEOUT);
 	}
 
@@ -44,7 +49,21 @@ public class SettingsFragment extends PreferenceFragment implements
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
+		Activity activity = getActivity();
+		boolean enable = sharedPreferences.getBoolean(
+				SettingsActivity.PREF_ENABLE,
+				getResources().getBoolean(R.bool.pref_enable_default));
+
 		switch (key) {
+		case SettingsActivity.PREF_ENABLE:
+			PreferenceScreen screen = getPreferenceScreen();
+			for (int i = 0, ii = screen.getPreferenceCount(); i < ii; i++) {
+				Preference pref = screen.getPreference(i);
+				if (!"pref_enable".equals(pref.getKey())) {
+					pref.setEnabled(enable);
+				}
+			}
+			break;
 		case SettingsActivity.PREF_TIMEOUT:
 			ListPreference pref = (ListPreference) findPreference(key);
 			String timeoutString = sharedPreferences.getString(key,
@@ -61,7 +80,7 @@ public class SettingsFragment extends PreferenceFragment implements
 			pref.setSummary("Restore volume after " + delayText);
 			break;
 		case SettingsActivity.PREF_VOLUME_LEVEL_REL:
-			AudioManager audioManager = (AudioManager) getActivity()
+			AudioManager audioManager = (AudioManager) activity
 					.getSystemService(Context.AUDIO_SERVICE);
 			int maxVolume = audioManager
 					.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -76,6 +95,13 @@ public class SettingsFragment extends PreferenceFragment implements
 			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume,
 					AudioManager.FLAG_PLAY_SOUND);
 			break;
+		}
+
+		// stop (and restart if enabled) service after changing settings
+		Intent intent = new Intent(activity, BackgroundService.class);
+		activity.stopService(intent);
+		if (enable) {
+			activity.startService(intent);
 		}
 	}
 }

@@ -5,7 +5,7 @@
     <string name="pref_cat_configuration">Configuration</string>
     <string name="pref_enable">Monitor volume changes</string>
     <string name="pref_enable_summ">Enable background service to act on volume changes</string>
-    <string name="pref_volume_level">Base media volume level</string>
+    <string name="pref_volume_level">Base media volume</string>
     <string name="pref_volume_level_summ">Media volume level to set when restoring</string>
     <string name="pref_timeout">Timeout time</string>
     <string name="pref_timeout_summ">Idle time after which the screen is turned off</string>

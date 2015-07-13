@@ -12,8 +12,8 @@
     <string name="pref_timeout_title">Timeout time</string>
     <string name="pref_timeout_default">30</string>
     <string name="pref_cat_debug">Debug</string>
-    <string name="pref_log">Log to external drive</string>
-    <string name="pref_log_summ">Enable logging to the external drive</string>
+    <string name="pref_log">Log to external storage</string>
+    <string name="pref_log_summ">Write logging data to the external storage</string>
     <string name="pref_toast">Show toasts</string>
     <string name="pref_toast_summ">Show toast on app actions</string>
 </resources>

@@ -91,7 +91,7 @@ public class SettingsFragment extends PreferenceFragment implements
 			// update absolute volume level
 			Editor editor = sharedPreferences.edit();
 			editor.putInt(SettingsActivity.PREF_VOLUME_LEVEL, volume);
-			editor.commit();
+			editor.apply();
 			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume,
 					AudioManager.FLAG_PLAY_SOUND);
 			break;

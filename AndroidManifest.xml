@@ -35,8 +35,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".CountdownReceiver">
-            <intent-filter>
-            </intent-filter>
         </receiver>
     </application>
 

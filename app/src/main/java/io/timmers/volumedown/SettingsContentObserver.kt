@@ -9,8 +9,11 @@ import android.media.AudioManager
 import android.os.Handler
 import android.widget.Toast
 
-class SettingsContentObserver(context: Context, handler: Handler?) :
-    ContentObserver(handler) {
+class SettingsContentObserver(context: Context, handler: Handler?) : ContentObserver(handler) {
+    companion object {
+        var toast: Toast? = null
+    }
+
     private val mLog: Logger = Logger(context, SettingsContentObserver::class.java.simpleName)
     private var mScreenReceiver: BroadcastReceiver? = null
     private val mContext: Context
@@ -38,7 +41,9 @@ class SettingsContentObserver(context: Context, handler: Handler?) :
         if (volume != mVolume) {
             mScreenReceiver = ScreenReceiver(mContext)
             mLog.v("Settings change detected")
-            Toast.makeText(mContext, "Detected volume change", Toast.LENGTH_SHORT).show()
+            toast?.cancel()
+            toast = Toast.makeText(mContext, "Detected volume change", Toast.LENGTH_SHORT)
+                .apply { show() }
             val filter = IntentFilter()
             filter.addAction(Intent.ACTION_SCREEN_OFF)
             filter.addAction(Intent.ACTION_SCREEN_ON)
